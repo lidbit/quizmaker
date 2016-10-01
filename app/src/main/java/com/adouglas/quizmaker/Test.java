@@ -27,4 +27,10 @@ public class Test extends SugarRecord {
         this.testType = testType;
         this.userId = userId;
     }
+
+    @Override
+    public String toString()
+    {
+        return this.name;
+    }
 }
