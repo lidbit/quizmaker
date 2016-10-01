@@ -11,6 +11,8 @@ public class TestsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tests);
 
+        Test t = Test.findById(Test.class, 1);
+
         Test test = new Test();
         test.name = "Arithemtic";
         test.description = "Basic math";
