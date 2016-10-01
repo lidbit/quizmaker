@@ -1,8 +1,11 @@
 package com.adouglas.quizmaker;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.List;
 
 public class TestsActivity extends Activity {
 
@@ -11,14 +14,10 @@ public class TestsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tests);
 
-        Test t = Test.findById(Test.class, 1);
+        List<Test> tests = Test.listAll(Test.class);
+        ListView listView = (ListView) findViewById(R.id.lvTests);
 
-        Test test = new Test();
-        test.name = "Arithemtic";
-        test.description = "Basic math";
-        test.running = false;
-        test.userId = 1;
-        test.timelimit = "60";
-        test.save();
+        ArrayAdapter<Test> testsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tests);
+        listView.setAdapter(testsAdapter);
     }
 }
