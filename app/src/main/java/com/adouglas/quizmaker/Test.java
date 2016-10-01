@@ -1,3 +1,5 @@
+package com.adouglas.quizmaker;
+
 import com.orm.SugarRecord;
 
 /**

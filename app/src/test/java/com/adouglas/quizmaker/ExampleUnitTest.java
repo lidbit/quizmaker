@@ -5,7 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * To work on unit TestsActivity, switch the Test Artifact in the Build Variants view.
+ * To work on unit TestsActivity, switch the com.adouglas.quizmaker.Test Artifact in the Build Variants view.
  */
 public class ExampleUnitTest {
     @Test
