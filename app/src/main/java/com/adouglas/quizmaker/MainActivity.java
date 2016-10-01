@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void OnTakeTest(View view) {
         Toast.makeText(getApplicationContext(), "on take test", Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(this, testsActivity.class);
+        Intent intent = new Intent(this, TestsActivity.class);
         startActivity(intent);
     }
 

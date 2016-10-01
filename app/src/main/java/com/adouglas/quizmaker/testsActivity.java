@@ -3,7 +3,7 @@ package com.adouglas.quizmaker;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class testsActivity extends AppCompatActivity {
+public class TestsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
