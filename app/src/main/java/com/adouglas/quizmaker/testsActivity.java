@@ -30,7 +30,7 @@ public class TestsActivity extends Activity {
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3)
             {
                 Test test = (Test) listView.getItemAtPosition(position);
-                intent.putExtra("test_id", test.getId());
+                intent.putExtra("test_id", test.getId().toString());
                 startActivity(intent);
             }
         });
