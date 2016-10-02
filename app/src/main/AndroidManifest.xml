@@ -38,7 +38,8 @@
             android:value="@integer/google_play_services_version" />
         android:debu
         <activity android:name=".TestIntroActivity" />
-        <activity android:name=".TestRunnerActivity"></activity>
+        <activity android:name=".TestRunnerActivity" />
+        <activity android:name=".TestResultActivity"></activity>
     </application>
 
 </manifest>

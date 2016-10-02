@@ -7,17 +7,17 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 public class TestRunnerActivity extends Activity {
 
     TextView time;
     Test test;
+    Intent testResultIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_runner);
+        testResultIntent = new Intent(this, TestResultActivity.class);
         time = (TextView) findViewById(R.id.time_remaining);
         Intent intent = getIntent();
         String testId = intent.getStringExtra("test_id");
@@ -29,7 +29,7 @@ public class TestRunnerActivity extends Activity {
     {
         super.onStart();
         Log.d("test runner", "started");
-        new CountDownTimer(Integer.parseInt(test.timelimit) * 10000, 1000) {
+        new CountDownTimer(Integer.parseInt(test.timelimit) * 1000, 1000) {
 
             public void onTick(long millisUntilFinished) {
 
@@ -38,6 +38,8 @@ public class TestRunnerActivity extends Activity {
 
             public void onFinish() {
                 time.setText("done!");
+                testResultIntent.putExtra("test_id", test.getId().toString());
+                startActivity(testResultIntent);
             }
         }.start();
     }

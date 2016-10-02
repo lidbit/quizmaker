@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class TestIntroActivity extends Activity {
 
@@ -24,8 +23,6 @@ public class TestIntroActivity extends Activity {
 
         TextView textView = (TextView) findViewById(R.id.test_name);
         textView.setText(test.name);
-
-        Toast.makeText(getApplicationContext(), test_id, Toast.LENGTH_SHORT).show();
     }
 
     public void onStartTest(View view)
