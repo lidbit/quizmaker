@@ -3,10 +3,13 @@ package com.adouglas.quizmaker;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class TestIntroActivity extends Activity {
+
+    private Test test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,11 +20,18 @@ public class TestIntroActivity extends Activity {
         String test_id = intent.getStringExtra("test_id");
         Integer id = Integer.parseInt(test_id);
 
-        Test test = Test.findById(Test.class, id);
+        test = Test.findById(Test.class, id);
 
         TextView textView = (TextView) findViewById(R.id.test_name);
         textView.setText(test.name);
 
         Toast.makeText(getApplicationContext(), test_id, Toast.LENGTH_SHORT).show();
+    }
+
+    public void onStartTest(View view)
+    {
+        Intent intent = new Intent(this, TestRunnerActivity.class);
+        intent.putExtra("test_id", test.getId().toString());
+        startActivity(intent);
     }
 }
