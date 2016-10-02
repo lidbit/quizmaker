@@ -10,7 +10,7 @@
     tools:context="com.adouglas.quizmaker.MainActivity">
 
     <TableLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
@@ -21,6 +21,7 @@
                 android:layout_width="match_parent"
                 android:text="Take Test"
                 android:onClick="OnTakeTest"
+                android:layout_weight="1"
             />
         </TableRow>
         <TableRow>
@@ -30,6 +31,7 @@
                 android:layout_width="match_parent"
                 android:text="Make Test"
                 android:onClick="onMakeTest"
+                android:layout_weight="1"
             />
         </TableRow>
         <TableRow>
@@ -39,6 +41,7 @@
                 android:layout_height="match_parent"
                 android:text="Test Results"
                 android:onClick="onTestResults"
+                android:layout_weight="1"
             />
         </TableRow>
     </TableLayout>

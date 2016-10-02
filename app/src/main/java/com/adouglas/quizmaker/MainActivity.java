@@ -38,6 +38,8 @@ public class MainActivity extends Activity {
 
     public void onMakeTest(View view)
     {
+        Intent intent = new Intent(this, EditTestActivity.class);
+        startActivity(intent);
         Toast.makeText(getApplicationContext(), "on make test", Toast.LENGTH_LONG).show();
     }
 
