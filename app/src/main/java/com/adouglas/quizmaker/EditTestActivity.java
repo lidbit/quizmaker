@@ -42,6 +42,8 @@ public class EditTestActivity extends Activity {
         test.save();
 
         clearFields();
+        Intent intent = new Intent(this, TestsActivity.class);
+        startActivity(intent);
     }
 
     private void clearFields()

@@ -31,7 +31,6 @@ public class MainActivity extends Activity {
     }
 
     public void OnTakeTest(View view) {
-        Toast.makeText(getApplicationContext(), "on take test", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, TestsActivity.class);
         startActivity(intent);
     }
@@ -40,7 +39,6 @@ public class MainActivity extends Activity {
     {
         Intent intent = new Intent(this, EditTestActivity.class);
         startActivity(intent);
-        Toast.makeText(getApplicationContext(), "on make test", Toast.LENGTH_LONG).show();
     }
 
     public void onTestResults(View view)
