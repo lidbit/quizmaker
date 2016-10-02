@@ -20,9 +20,17 @@ public class TestIntroActivity extends Activity {
         Integer id = Integer.parseInt(test_id);
 
         test = Test.findById(Test.class, id);
+        int questions = test.getQuestions().size();
 
-        TextView textView = (TextView) findViewById(R.id.test_name);
-        textView.setText(test.name);
+        TextView textViewName = (TextView) findViewById(R.id.test_name);
+        TextView textViewDesc = (TextView) findViewById(R.id.test_description);
+        TextView textViewTimeLimit = (TextView) findViewById(R.id.test_timelimit);
+        TextView textViewQuestionCount = (TextView) findViewById(R.id.question_count);
+
+        textViewName.setText(test.name);
+        textViewDesc.setText(test.description);
+        textViewTimeLimit.setText(test.timelimit);
+        textViewQuestionCount.setText(String.valueOf(questions));
     }
 
     public void onStartTest(View view)
