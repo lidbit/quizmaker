@@ -19,25 +19,11 @@ public class Choice extends SugarRecord {
         this.correct = correct;
     }
 
-    public void setChoiceContent(String choiceContent)
-    {
-        this.choiceContent = choiceContent;
-    }
+    Question question;
 
-    public void setCorrect(boolean correct)
-    {
-        this.correct = correct;
-    }
-
-    public String getChoiceContent()
+    @Override
+    public String toString()
     {
         return choiceContent;
     }
-
-    public boolean getCorrect()
-    {
-        return correct;
-    }
-
-    Question question;
 }
