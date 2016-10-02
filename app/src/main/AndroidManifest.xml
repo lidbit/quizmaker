@@ -39,7 +39,8 @@
         android:debu
         <activity android:name=".TestIntroActivity" />
         <activity android:name=".TestRunnerActivity" />
-        <activity android:name=".TestResultActivity"></activity>
+        <activity android:name=".TestResultActivity" />
+        <activity android:name=".EditTestActivity"></activity>
     </application>
 
 </manifest>
