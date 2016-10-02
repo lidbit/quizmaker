@@ -9,10 +9,26 @@ import android.widget.Toast;
 
 public class EditTestActivity extends Activity {
 
+    Test test;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_test);
+
+        Intent intent = getIntent();
+        String testId = intent.getStringExtra("test_id");
+        if(testId != null && !testId.isEmpty())
+        {
+            test = Test.findById(Test.class, Integer.valueOf(testId));
+            ((EditText) findViewById(R.id.txtTestName)).setText(test.name);
+            ((EditText) findViewById(R.id.txtTestDescription)).setText(test.description);
+            ((EditText) findViewById(R.id.txtTestTimelimit)).setText(test.timelimit);
+        }
+        else
+        {
+            test = new Test();
+        }
     }
 
     public void onSave(View view)
@@ -21,13 +37,11 @@ public class EditTestActivity extends Activity {
         String testDescription = ((EditText) findViewById(R.id.txtTestDescription)).getText().toString();
         String testTimeLimit = ((EditText) findViewById(R.id.txtTestTimelimit)).getText().toString();
 
-        Test test = new Test();
         test.name = testName;
         test.description = testDescription;
         test.timelimit = testTimeLimit;
         test.save();
 
-        Toast.makeText(getApplicationContext(), "Test Created", Toast.LENGTH_SHORT);
         clearFields();
     }
 

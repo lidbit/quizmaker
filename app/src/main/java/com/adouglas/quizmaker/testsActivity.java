@@ -71,7 +71,10 @@ public class TestsActivity extends Activity {
 
     private void editTest(long id)
     {
-        Toast.makeText(getApplicationContext(), "edit test " + String.valueOf(id), Toast.LENGTH_SHORT);
+        Test test = tests.get((int)id);
+        Intent intent = new Intent(this, EditTestActivity.class);
+        intent.putExtra("test_id", test.getId().toString());
+        startActivity(intent);
     }
 
     private void deleteTest(long id)
