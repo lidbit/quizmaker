@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -24,6 +26,7 @@ public class TestRunnerActivity extends Activity {
     private ArrayAdapter<Choice> choicesAdapter;
     private int currentQuestionIndex = 0;
     private ListView lvChoices;
+    private AdapterView.OnItemClickListener clickListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,20 +44,27 @@ public class TestRunnerActivity extends Activity {
 
         lvChoices = (ListView) findViewById(R.id.lvChoices);
 
+        //TODO: Fix index out of bounds exception, when there are no questions
         currentQuestion.setText(questions.get(currentQuestionIndex).content);
         currentChoices = Choice.find(Choice.class, "question = ?", questions.get(currentQuestionIndex).getId().toString());
 
         choicesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, currentChoices);
 
         lvChoices.setAdapter(choicesAdapter);
-        lvChoices.setClickable(true);
+        lvChoices.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
-        lvChoices.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3)
-            {
+        // TODO: Issue here with not able to select a choice once it has been selected previously
+        // Currently only able to select an answer once the first time.
+        clickListener = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Choice choice = (Choice) lvChoices.getItemAtPosition(position);
+                Log.d("", Boolean.toString(choice.correct));
+                Toast.makeText(getApplicationContext(), Boolean.toString(choice.correct), Toast.LENGTH_SHORT);
             }
-        });
+        };
+
+        lvChoices.setOnItemClickListener(clickListener);
     }
 
     private void getNextQuestion() {

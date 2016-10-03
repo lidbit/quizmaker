@@ -40,7 +40,11 @@
         <activity android:name=".TestIntroActivity" />
         <activity android:name=".TestRunnerActivity" />
         <activity android:name=".TestResultActivity" />
-        <activity android:name=".EditTestActivity"></activity>
+        <activity android:name=".EditTestActivity" />
+        <activity android:name=".QuestionsActivity" />
+        <activity android:name=".AddQuestionActivity" />
+        <activity android:name=".ChoicesActivity" />
+        <activity android:name=".AddChoiceActivity"></activity>
     </application>
 
 </manifest>
