@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 public class AddQuestionActivity extends Activity {
 
@@ -20,27 +21,16 @@ public class AddQuestionActivity extends Activity {
 
     public void onAddQuestion(View view)
     {
-        Question question1 = new Question();
-        Question question2 = new Question();
-        Question question3 = new Question();
-        Question question4 = new Question();
+        String questionContent = ((TextView) findViewById(R.id.QuestionContent)).getText().toString();
 
-        question1.content = "1 + 1";
-        question1.test = test;
+        Question question = new Question();
+        question.content = questionContent;
+        question.test = test;
+        question.save();
 
-        question2.content = "2 + 1";
-        question2.test = test;
-
-        question3.content = "2 + 5";
-        question3.test = test;
-
-        question4.content = "4 + 4";
-        question4.test = test;
-
-        question1.save();
-        question2.save();
-        question3.save();
-        question4.save();
+        Intent intent = new Intent(this, ChoicesActivity.class);
+        intent.putExtra("question_id", question.getId().toString());
+        startActivity(intent);
     }
 
     public void onCancel(View view)

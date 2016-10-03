@@ -10,4 +10,38 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.adouglas.quizmaker.AddChoiceActivity">
 
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TableRow>
+            <TextView
+                android:id="@+id/choiceContent"
+            />
+        </TableRow>
+        <TableRow>
+            <CheckBox
+                android:id="@+id/correct"
+                android:text="Correct"
+            />
+        </TableRow>
+        <TableRow>
+            <LinearLayout
+                android:orientation="horizontal">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Save"
+                    android:onClick="onSaveChoice"
+                />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cancel"
+                    android:onClick="onCancel"
+                />
+            </LinearLayout>
+        </TableRow>
+    </TableLayout>
+
 </RelativeLayout>
