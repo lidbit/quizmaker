@@ -15,9 +15,9 @@
         android:layout_height="wrap_content">
 
         <TableRow>
-            <TextView
+            <EditText
                 android:id="@+id/QuestionContent"
-                />
+            />
         </TableRow>
         <TableRow>
             <LinearLayout

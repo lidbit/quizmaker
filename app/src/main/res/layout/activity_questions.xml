@@ -34,12 +34,14 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/btnTest"
                     android:onClick="onTest"
+                    android:text="Back to Test"
                 />
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/btnAddQuestion"
                     android:onClick="onAddQuestion"
+                    android:text="Add"
                 />
             </LinearLayout>
         </TableRow>

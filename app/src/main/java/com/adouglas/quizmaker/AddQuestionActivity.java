@@ -19,7 +19,7 @@ public class AddQuestionActivity extends Activity {
         test = Test.findById(Test.class, Long.parseLong(testId));
     }
 
-    public void onAddQuestion(View view)
+    public void onSaveQuestion(View view)
     {
         String questionContent = ((TextView) findViewById(R.id.QuestionContent)).getText().toString();
 

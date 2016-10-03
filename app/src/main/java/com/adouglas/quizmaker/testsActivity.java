@@ -81,6 +81,24 @@ public class TestsActivity extends Activity {
     {
         Test test = tests.get((int)id);
 
+        List<Question> questions = Question.find(Question.class, "test = ?", test.getId().toString());
+
+        if(questions.size() > 0)
+        {
+            for(int i = 0; i < questions.size(); i++)
+            {
+                List<Choice> choices = Choice.find(Choice.class, "question = ?", questions.get(i).getId().toString());
+                if(choices.size() > 0)
+                {
+                    for(int j = 0; j < choices.size(); j++)
+                    {
+                        choices.get(j).delete();
+                    }
+                }
+                questions.get(i).delete();
+            }
+        }
+
         tests.remove((int)id);
         testsAdapter.notifyDataSetChanged();
         // remove from db
