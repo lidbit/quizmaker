@@ -33,11 +33,13 @@ public class AddQuestionActivity extends Activity {
     public void onSaveQuestion(View view)
     {
         String questionContent = ((TextView) findViewById(R.id.QuestionContent)).getText().toString();
+        Intent intent = new Intent(this, ChoicesActivity.class);
 
         if(question != null)
         {
             question.content = questionContent;
             question.save();
+            intent.putExtra("question_id", question.getId().toString());
         }
         else
         {
@@ -45,10 +47,8 @@ public class AddQuestionActivity extends Activity {
             newQuestion.content = questionContent;
             newQuestion.test = test;
             newQuestion.save();
+            intent.putExtra("question_id", newQuestion.getId().toString());
         }
-
-        Intent intent = new Intent(this, ChoicesActivity.class);
-        intent.putExtra("question_id", question.getId().toString());
         startActivity(intent);
     }
 

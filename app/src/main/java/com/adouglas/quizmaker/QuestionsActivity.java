@@ -78,6 +78,9 @@ public class QuestionsActivity extends Activity {
                 choices.get(i).delete();
             }
         }
+        questions.remove(id);
+        question.delete();
+        questionsAdapter.notifyDataSetChanged();
     }
 
     public void onTest(View view)
