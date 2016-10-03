@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ public class TestRunnerActivity extends Activity {
 
     TextView time;
     TextView currentQuestion;
+    TextView currentQuestionNumber;
     Test test;
     List<Question> questions;
     List<Choice> currentChoices;
@@ -36,13 +38,18 @@ public class TestRunnerActivity extends Activity {
         testResultIntent = new Intent(this, TestResultActivity.class);
 
         time = (TextView) findViewById(R.id.time_remaining);
+
         currentQuestion = (TextView) findViewById(R.id.question);
+        currentQuestionNumber = (TextView) findViewById(R.id.current_question);
+
         Intent intent = getIntent();
         String testId = intent.getStringExtra("test_id");
         test = Test.findById(Test.class, Long.parseLong(testId));
         questions = Question.find(Question.class, "test = ?", test.getId().toString());
 
         lvChoices = (ListView) findViewById(R.id.lvChoices);
+
+        currentQuestionNumber.setText(String.valueOf(currentQuestionIndex+1));
 
         //TODO: Fix index out of bounds exception, when there are no questions
         currentQuestion.setText(questions.get(currentQuestionIndex).content);
@@ -68,7 +75,10 @@ public class TestRunnerActivity extends Activity {
     }
 
     private void getNextQuestion() {
+        Button btnPrev = (Button) findViewById(R.id.btnPrev);
+        btnPrev.setEnabled(true);
         currentQuestion.setText(questions.get(currentQuestionIndex).content);
+        currentQuestionNumber.setText(String.valueOf(currentQuestionIndex+1));
         choicesAdapter.clear();
         currentChoices = Choice.find(Choice.class, "question = ?", questions.get(currentQuestionIndex).getId().toString());
         choicesAdapter.addAll(currentChoices);
@@ -77,16 +87,23 @@ public class TestRunnerActivity extends Activity {
         currentQuestionIndex++;
         if(currentQuestionIndex > questions.size() - 1)
         {
+            Button btnNext = (Button) findViewById(R.id.btnNext);
+            btnNext.setEnabled(false);
             currentQuestionIndex = questions.size() - 1;
         }
     }
 
     private void getPrevQuestion() {
+        Button btnNext = (Button) findViewById(R.id.btnNext);
+        btnNext.setEnabled(true);
         currentQuestionIndex--;
         if(currentQuestionIndex < 0)
         {
+            Button btnPrev = (Button) findViewById(R.id.btnPrev);
+            btnPrev.setEnabled(false);
             currentQuestionIndex = 0;
         }
+        currentQuestionNumber.setText(String.valueOf(currentQuestionIndex+1));
         currentQuestion.setText(questions.get(currentQuestionIndex).content);
         currentChoices = Choice.find(Choice.class, "question = ?", questions.get(currentQuestionIndex).getId().toString());
         choicesAdapter.notifyDataSetChanged();
