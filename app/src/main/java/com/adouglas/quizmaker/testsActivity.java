@@ -35,8 +35,8 @@ public class TestsActivity extends Activity {
         listView.setAdapter(testsAdapter);
         listView.setClickable(true);
         final Intent intent = new Intent(this, TestIntroActivity.class);
-        listView.setOnItemClickListener(new OnItemClickListener(){
-            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3)
+        listView.setOnItemClickListener(new OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View arg1, int position, long id)
             {
                 Test test = (Test) listView.getItemAtPosition(position);
                 intent.putExtra("test_id", test.getId().toString());

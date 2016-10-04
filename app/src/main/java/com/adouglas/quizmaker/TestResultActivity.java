@@ -11,6 +11,8 @@ import java.util.List;
 
 public class TestResultActivity extends Activity {
     private Test test;
+    ArrayAdapter<QuestionResult> questionResultArrayAdapter;
+    List<QuestionResult> questionResults;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +21,11 @@ public class TestResultActivity extends Activity {
         Intent intent = getIntent();
         String testId = intent.getStringExtra("test_id");
         test = Test.findById(Test.class, Integer.parseInt(testId));
-
+        ListView lvQuestionResults = (ListView) findViewById(R.id.lvQuestionResults);
+        TestResult testResult = TestResult.find(TestResult.class, "test_id = ?", test.getId().toString()).get(0);
+        questionResults = QuestionResult.find(QuestionResult.class, "test_result = ?", testResult.getId().toString());
+        questionResultArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, questionResults);
+        lvQuestionResults.setAdapter(questionResultArrayAdapter);
     }
 
     public void onBackToTests(View view)

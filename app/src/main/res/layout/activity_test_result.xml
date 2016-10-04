@@ -16,6 +16,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/test_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Test Score"
@@ -23,7 +24,7 @@
             android:textStyle="bold"
         />
         <ListView
-            android:id="@+id/lvTestResults"
+            android:id="@+id/lvQuestionResults"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
         </ListView>
