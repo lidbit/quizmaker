@@ -15,4 +15,10 @@ public class QuestionResult extends SugarRecord {
     public QuestionResult() {}
 
     TestResult testResult;
+
+    @Override
+    public String toString()
+    {
+        return userChoice + " " + correct;
+    }
 }

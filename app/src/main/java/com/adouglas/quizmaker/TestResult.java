@@ -11,11 +11,14 @@ public class TestResult extends SugarRecord {
     String testName;
     String testDescription;
     Date dateTaken;
-    int score;
+    int correctAnswers;
     int totalQuestions;
     int testId;
 
-    public TestResult() {}
+    public TestResult()
+    {
+
+    }
 
     @Override
     public String toString()

@@ -38,4 +38,15 @@ public class Question extends SugarRecord {
     {
         return Choice.find(Choice.class, "question = ?", getId().toString());
     }
+
+    public Choice getCorrectChoice()
+    {
+        Choice c = null;
+        for (Choice choice: getChoices())
+            if (choice.correct) {
+                c = choice;
+                break;
+            }
+        return c;
+    }
 }

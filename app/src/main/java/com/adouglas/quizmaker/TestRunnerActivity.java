@@ -14,6 +14,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TestRunnerActivity extends Activity {
@@ -24,9 +26,12 @@ public class TestRunnerActivity extends Activity {
     Test test;
     List<Question> questions;
     List<Choice> currentChoices;
+    List<QuestionResult> questionResults;
     Intent testResultIntent;
     private ArrayAdapter<Choice> choicesAdapter;
     private int currentQuestionIndex = 0;
+    Choice currentChoice;
+    private int correctAnswers = 0;
     private ListView lvChoices;
     private AdapterView.OnItemClickListener clickListener;
 
@@ -35,6 +40,7 @@ public class TestRunnerActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_runner);
 
+        questionResults = new ArrayList<>();
         testResultIntent = new Intent(this, TestResultActivity.class);
 
         time = (TextView) findViewById(R.id.time_remaining);
@@ -65,9 +71,18 @@ public class TestRunnerActivity extends Activity {
         clickListener = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Choice choice = (Choice) lvChoices.getItemAtPosition(position);
-                Log.d("", Boolean.toString(choice.correct));
-                Toast.makeText(getApplicationContext(), Boolean.toString(choice.correct), Toast.LENGTH_SHORT);
+                currentChoice = (Choice) lvChoices.getItemAtPosition(position);
+                if(currentChoice.correct)
+                {
+                    correctAnswers++;
+                }
+                QuestionResult questionResult = new QuestionResult();
+                questionResult.questionContent = questions.get(currentQuestionIndex).content;
+                questionResult.correct = currentChoice.correct;
+                questionResult.userChoice = currentChoice.choiceContent;
+                questionResult.correctChoice = questions.get(currentQuestionIndex).getCorrectChoice().choiceContent;
+
+                questionResults.add(questionResult);
             }
         };
 
@@ -123,6 +138,20 @@ public class TestRunnerActivity extends Activity {
 
             public void onFinish() {
                 time.setText("done!");
+                TestResult testResult = new TestResult();
+                testResult.testName = test.name;
+                testResult.testDescription = test.description;
+                testResult.dateTaken = new Date();
+                testResult.totalQuestions = questions.size();
+                testResult.testId = test.getId().intValue();
+                testResult.correctAnswers = correctAnswers;
+                testResult.save();
+
+                for (QuestionResult questionResult:questionResults) {
+                    questionResult.testResult = testResult;
+                    questionResult.save();
+                }
+
                 testResultIntent.putExtra("test_id", test.getId().toString());
                 startActivity(testResultIntent);
             }

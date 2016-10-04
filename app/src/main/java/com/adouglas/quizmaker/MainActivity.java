@@ -43,7 +43,8 @@ public class MainActivity extends Activity {
 
     public void onTestResults(View view)
     {
-        Toast.makeText(getApplicationContext(), "on test results", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this, TestResultsActivity.class);
+        startActivity(intent);
     }
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.

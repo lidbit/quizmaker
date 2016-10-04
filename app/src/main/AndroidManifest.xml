@@ -26,7 +26,7 @@
             android:value="quizmaker.db" />
         <meta-data
             android:name="VERSION"
-            android:value="1" />
+            android:value="2" />
         <meta-data
             android:name="QUERY_LOG"
             android:value="true" />
@@ -44,7 +44,8 @@
         <activity android:name=".QuestionsActivity" />
         <activity android:name=".AddQuestionActivity" />
         <activity android:name=".ChoicesActivity" />
-        <activity android:name=".AddChoiceActivity"></activity>
+        <activity android:name=".AddChoiceActivity" />
+        <activity android:name=".TestResultsActivity"></activity>
     </application>
 
 </manifest>
