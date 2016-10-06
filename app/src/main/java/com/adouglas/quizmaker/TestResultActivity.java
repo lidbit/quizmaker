@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import java.util.List;
 
-public class TestResultActivity extends Activity {
+public class TestResultActivity extends BaseActivity {
     private TestResult testResult;
     ArrayAdapter<QuestionResult> questionResultArrayAdapter;
     List<QuestionResult> questionResults;

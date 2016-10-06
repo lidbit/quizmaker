@@ -10,7 +10,7 @@ import android.widget.ListView;
 
 import java.util.List;
 
-public class TestResultsActivity extends Activity {
+public class TestResultsActivity extends BaseActivity {
     ArrayAdapter<TestResult> testResultArrayAdapter;
     List<TestResult> testResults;
 

@@ -1,5 +1,6 @@
 package com.adouglas.quizmaker;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +16,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
-public class TestsActivity extends Activity {
+public class TestsActivity extends BaseActivity {
 
     private ArrayAdapter<Test> testsAdapter;
     private List<Test> tests;
@@ -24,6 +25,11 @@ public class TestsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tests);
+
+        ActionBar actionBar = getActionBar();
+        actionBar.setTitle("Tests");
+        actionBar.setSubtitle("Long press to edit test");
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         tests = Test.listAll(Test.class);
         final ListView listView = (ListView) findViewById(R.id.lvTests);

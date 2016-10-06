@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-public class TestIntroActivity extends Activity {
+public class TestIntroActivity extends BaseActivity {
 
     private Test test;
 

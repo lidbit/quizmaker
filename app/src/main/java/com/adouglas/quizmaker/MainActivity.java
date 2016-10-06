@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -13,7 +15,7 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-public class MainActivity extends Activity {
+public class MainActivity extends BaseActivity {
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -33,18 +35,21 @@ public class MainActivity extends Activity {
     public void OnTakeTest(View view) {
         Intent intent = new Intent(this, TestsActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void onMakeTest(View view)
     {
         Intent intent = new Intent(this, EditTestActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void onTestResults(View view)
     {
         Intent intent = new Intent(this, TestResultsActivity.class);
         startActivity(intent);
+        finish();
     }
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.

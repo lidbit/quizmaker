@@ -9,7 +9,8 @@
         android:supportsRtl="true"
         android:debuggable="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:label="Quizmaker">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,8 +18,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TestsActivity"
-            android:label="Tests"/>
+        <activity
+            android:name=".TestsActivity"
+            android:label="Tests" />
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -39,26 +41,34 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
         android:debu
-        <activity android:name=".TestIntroActivity"
-            android:label="Test Introduction"
-        />
-        <activity android:name=".TestRunnerActivity"
-            android:label="Test Running"/>
-        <activity android:name=".TestResultActivity"
-            android:label="Test Result"/>
-        <activity android:name=".EditTestActivity"
-            android:label="Edit Test"/>
-        <activity android:name=".QuestionsActivity"
-            android:label="Questions"/>
-        <activity android:name=".AddQuestionActivity"
+        <activity
+            android:name=".TestIntroActivity"
+            android:label="Test Introduction" />
+        <activity
+            android:name=".TestRunnerActivity"
+            android:label="Test Running" />
+        <activity
+            android:name=".TestResultActivity"
+            android:label="Test Result" />
+        <activity
+            android:name=".EditTestActivity"
+            android:label="Edit Test" />
+        <activity
+            android:name=".QuestionsActivity"
+            android:label="Questions" />
+        <activity
+            android:name=".AddQuestionActivity"
             android:label="Add Question" />
-        <activity android:name=".ChoicesActivity"
+        <activity
+            android:name=".ChoicesActivity"
             android:label="Multiple Choices" />
-        <activity android:name=".AddChoiceActivity"
+        <activity
+            android:name=".AddChoiceActivity"
             android:label="Add Answer" />
-        <activity android:name=".TestResultsActivity"
-            android:label="Test Results">
-        </activity>
+        <activity
+            android:name=".TestResultsActivity"
+            android:label="Test Results"></activity>
+        <activity android:name=".BaseActivity"></activity>
     </application>
 
 </manifest>
