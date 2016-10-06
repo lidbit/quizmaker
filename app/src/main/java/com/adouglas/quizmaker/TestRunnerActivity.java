@@ -17,6 +17,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class TestRunnerActivity extends Activity {
 
@@ -27,32 +28,40 @@ public class TestRunnerActivity extends Activity {
     List<Question> questions;
     List<Choice> currentChoices;
     List<QuestionResult> questionResults;
-    Intent testResultIntent;
     private ArrayAdapter<Choice> choicesAdapter;
     private int currentQuestionIndex = 0;
     Choice currentChoice;
     private int correctAnswers = 0;
     private ListView lvChoices;
     private AdapterView.OnItemClickListener clickListener;
+    private TestResult testResult;
+    private long testResultId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_runner);
 
-        questionResults = new ArrayList<>();
-        testResultIntent = new Intent(this, TestResultActivity.class);
-
-        time = (TextView) findViewById(R.id.time_remaining);
-
-        currentQuestion = (TextView) findViewById(R.id.question);
-        currentQuestionNumber = (TextView) findViewById(R.id.current_question);
-
         Intent intent = getIntent();
         String testId = intent.getStringExtra("test_id");
         test = Test.findById(Test.class, Long.parseLong(testId));
+
         questions = Question.find(Question.class, "test = ?", test.getId().toString());
 
+        testResult = new TestResult();
+        testResult.testName = test.name;
+        testResult.testDescription = test.description;
+        testResult.dateTaken = new Date();
+        testResult.totalQuestions = questions.size();
+        testResult.testId = test.getId().intValue();
+        testResult.correctAnswers = correctAnswers;
+        testResultId = testResult.save();
+
+        questionResults = new ArrayList<>();
+
+        time = (TextView) findViewById(R.id.time_remaining);
+        currentQuestion = (TextView) findViewById(R.id.question);
+        currentQuestionNumber = (TextView) findViewById(R.id.current_question);
         lvChoices = (ListView) findViewById(R.id.lvChoices);
 
         currentQuestionNumber.setText(String.valueOf(currentQuestionIndex+1));
@@ -62,7 +71,6 @@ public class TestRunnerActivity extends Activity {
         currentChoices = Choice.find(Choice.class, "question = ?", questions.get(currentQuestionIndex).getId().toString());
 
         choicesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, currentChoices);
-
         lvChoices.setAdapter(choicesAdapter);
         lvChoices.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
@@ -72,17 +80,44 @@ public class TestRunnerActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 currentChoice = (Choice) lvChoices.getItemAtPosition(position);
+                boolean questionAnswered = false;
+                QuestionResult questionResult;
                 if(currentChoice.correct)
                 {
                     correctAnswers++;
+                    testResult.correctAnswers = correctAnswers;
                 }
-                QuestionResult questionResult = new QuestionResult();
-                questionResult.questionContent = questions.get(currentQuestionIndex).content;
-                questionResult.correct = currentChoice.correct;
-                questionResult.userChoice = currentChoice.choiceContent;
-                questionResult.correctChoice = questions.get(currentQuestionIndex).getCorrectChoice().choiceContent;
 
-                questionResults.add(questionResult);
+                for(int i = 0; i < questionResults.size(); i++)
+                {
+                    if(Objects.equals(questionResults.get(i).questionContent, questions.get(currentQuestionIndex).content))
+                    {
+                        questionAnswered = true;
+                        break;
+                    }
+                }
+
+                if(!questionAnswered)
+                {
+                    questionResult = new QuestionResult();
+                    questionResult.questionContent = questions.get(currentQuestionIndex).content;
+                    questionResult.correct = currentChoice.correct;
+                    questionResult.userChoice = currentChoice.choiceContent;
+                    questionResult.correctChoice = questions.get(currentQuestionIndex).getCorrectChoice().choiceContent;
+                    questionResult.testResult = TestResult.findById(TestResult.class, testResultId);
+                    questionResult.save();
+
+                    questionResults.add(questionResult);
+                }
+                else
+                {
+                    questionResult = questionResults.get(currentQuestionIndex);
+                    questionResult.questionContent = questions.get(currentQuestionIndex).content;
+                    questionResult.correct = currentChoice.correct;
+                    questionResult.userChoice = currentChoice.choiceContent;
+                    questionResult.correctChoice = questions.get(currentQuestionIndex).getCorrectChoice().choiceContent;
+                    questionResult.save();
+                }
             }
         };
 
@@ -90,21 +125,24 @@ public class TestRunnerActivity extends Activity {
     }
 
     private void getNextQuestion() {
-        Button btnPrev = (Button) findViewById(R.id.btnPrev);
-        btnPrev.setEnabled(true);
-        currentQuestion.setText(questions.get(currentQuestionIndex).content);
-        currentQuestionNumber.setText(String.valueOf(currentQuestionIndex+1));
-        choicesAdapter.clear();
-        currentChoices = Choice.find(Choice.class, "question = ?", questions.get(currentQuestionIndex).getId().toString());
-        choicesAdapter.addAll(currentChoices);
-        Log.d("", currentChoices.toString());
-        choicesAdapter.notifyDataSetChanged();
         currentQuestionIndex++;
         if(currentQuestionIndex > questions.size() - 1)
         {
             Button btnNext = (Button) findViewById(R.id.btnNext);
             btnNext.setEnabled(false);
             currentQuestionIndex = questions.size() - 1;
+        }
+        else
+        {
+            Button btnPrev = (Button) findViewById(R.id.btnPrev);
+            btnPrev.setEnabled(true);
+            currentQuestion.setText(questions.get(currentQuestionIndex).content);
+            currentQuestionNumber.setText(String.valueOf(currentQuestionIndex+1));
+            choicesAdapter.clear();
+            currentChoices = Choice.find(Choice.class, "question = ?", questions.get(currentQuestionIndex).getId().toString());
+            choicesAdapter.addAll(currentChoices);
+            Log.d("", currentChoices.toString());
+            choicesAdapter.notifyDataSetChanged();
         }
     }
 
@@ -129,6 +167,15 @@ public class TestRunnerActivity extends Activity {
     {
         super.onStart();
         Log.d("test runner", "started");
+        final Intent testResultIntent = new Intent(this, TestResultActivity.class);
+
+        // ffs
+        // Why do I have to make a copy of
+        // a variable to make it accessible in the next activity?!?!?
+        String trId = String.valueOf(testResultId);
+
+        testResultIntent.putExtra("test_result_id", trId);
+
         new CountDownTimer(Integer.parseInt(test.timelimit) * 1000, 1000) {
 
             public void onTick(long millisUntilFinished) {
@@ -138,22 +185,8 @@ public class TestRunnerActivity extends Activity {
 
             public void onFinish() {
                 time.setText("done!");
-                TestResult testResult = new TestResult();
-                testResult.testName = test.name;
-                testResult.testDescription = test.description;
-                testResult.dateTaken = new Date();
-                testResult.totalQuestions = questions.size();
-                testResult.testId = test.getId().intValue();
-                testResult.correctAnswers = correctAnswers;
-                testResult.save();
-
-                for (QuestionResult questionResult:questionResults) {
-                    questionResult.testResult = testResult;
-                    questionResult.save();
-                }
-
-                testResultIntent.putExtra("test_id", test.getId().toString());
                 startActivity(testResultIntent);
+                finish();
             }
         }.start();
     }

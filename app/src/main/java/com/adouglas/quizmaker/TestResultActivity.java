@@ -10,7 +10,7 @@ import android.widget.ListView;
 import java.util.List;
 
 public class TestResultActivity extends Activity {
-    private Test test;
+    private TestResult testResult;
     ArrayAdapter<QuestionResult> questionResultArrayAdapter;
     List<QuestionResult> questionResults;
 
@@ -19,12 +19,11 @@ public class TestResultActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_result);
         Intent intent = getIntent();
-        String testId = intent.getStringExtra("test_id");
-        test = Test.findById(Test.class, Integer.parseInt(testId));
-        ListView lvQuestionResults = (ListView) findViewById(R.id.lvQuestionResults);
-        TestResult testResult = TestResult.find(TestResult.class, "test_id = ?", test.getId().toString()).get(0);
+        String testResultId = intent.getStringExtra("test_result_id");
+        testResult = TestResult.findById(TestResult.class, Long.parseLong(testResultId));
         questionResults = QuestionResult.find(QuestionResult.class, "test_result = ?", testResult.getId().toString());
         questionResultArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, questionResults);
+        ListView lvQuestionResults = (ListView) findViewById(R.id.lvQuestionResults);
         lvQuestionResults.setAdapter(questionResultArrayAdapter);
     }
 
@@ -37,6 +36,7 @@ public class TestResultActivity extends Activity {
     public void onTryAgain(View view)
     {
         Intent intent = new Intent(this, TestIntroActivity.class);
+        Test test = Test.findById(Test.class, testResult.testId);
         intent.putExtra("test_id", test.getId().toString());
         startActivity(intent);
     }

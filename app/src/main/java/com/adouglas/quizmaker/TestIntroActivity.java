@@ -38,5 +38,6 @@ public class TestIntroActivity extends Activity {
         Intent intent = new Intent(this, TestRunnerActivity.class);
         intent.putExtra("test_id", test.getId().toString());
         startActivity(intent);
+        finish();
     }
 }

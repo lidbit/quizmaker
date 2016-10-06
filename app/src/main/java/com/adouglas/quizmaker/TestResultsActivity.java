@@ -30,8 +30,7 @@ public class TestResultsActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TestResult testResult = (TestResult) listView.getItemAtPosition(position);
-                Test test = Test.findById(Test.class, testResult.testId);
-                intent.putExtra("test_id", test.getId().toString());
+                intent.putExtra("test_result_id", testResult.getId().toString());
                 startActivity(intent);
             }
         });
