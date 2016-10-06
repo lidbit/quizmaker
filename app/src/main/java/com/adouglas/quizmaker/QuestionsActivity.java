@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+
 import java.util.List;
 
 public class QuestionsActivity extends Activity {
@@ -23,12 +25,15 @@ public class QuestionsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
 
-        ListView lvQuestions = (ListView) findViewById(R.id.lvQuestions);
-        registerForContextMenu(lvQuestions);
-
         Intent intent = getIntent();
         String testId = intent.getStringExtra("test_id");
         test = Test.findById(Test.class, Long.parseLong(testId));
+
+        TextView testName = (TextView) findViewById(R.id.test_name);
+        testName.setText(test.name);
+        ListView lvQuestions = (ListView) findViewById(R.id.lvQuestions);
+        registerForContextMenu(lvQuestions);
+
         questions = Question.find(Question.class, "test = ?", test.getId().toString());
         questionsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, questions);
         questionsAdapter.notifyDataSetChanged();
@@ -78,7 +83,7 @@ public class QuestionsActivity extends Activity {
                 choices.get(i).delete();
             }
         }
-        questions.remove(id);
+        questions.remove((int)id);
         question.delete();
         questionsAdapter.notifyDataSetChanged();
     }
@@ -88,6 +93,7 @@ public class QuestionsActivity extends Activity {
         Intent intent = new Intent(this, EditTestActivity.class);
         intent.putExtra("test_id", test.getId().toString());
         startActivity(intent);
+        finish();
     }
 
     public void onAddQuestion(View view)

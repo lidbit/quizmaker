@@ -2,6 +2,7 @@ package com.adouglas.quizmaker;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -27,10 +28,12 @@ public class TestIntroActivity extends BaseActivity {
         TextView textViewTimeLimit = (TextView) findViewById(R.id.test_timelimit);
         TextView textViewQuestionCount = (TextView) findViewById(R.id.question_count);
 
-        textViewName.setText(test.name);
-        textViewDesc.setText(test.description);
-        textViewTimeLimit.setText(test.timelimit);
-        textViewQuestionCount.setText(String.valueOf(questions));
+        Resources res = getResources();
+
+        textViewName.setText(res.getString(R.string.test_name, test.name));
+        textViewDesc.setText(res.getString(R.string.test_description, test.description));
+        textViewTimeLimit.setText(res.getString(R.string.time_limit, test.timelimit));
+        textViewQuestionCount.setText(String.valueOf(res.getString(R.string.test_question_count, questions)));
     }
 
     public void onStartTest(View view)

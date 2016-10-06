@@ -15,6 +15,13 @@
         android:layout_height="wrap_content">
 
         <TableRow>
+            <TextView
+                android:id="@+id/question_content"
+                android:textSize="20dp"
+            />
+        </TableRow>
+
+        <TableRow>
             <EditText
                 android:id="@+id/choiceContent"
             />

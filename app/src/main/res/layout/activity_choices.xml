@@ -17,6 +17,7 @@
         <TableRow>
             <TextView
                 android:id="@+id/question_content"
+                android:textSize="20dp"
             />
         </TableRow>
         <TableRow>

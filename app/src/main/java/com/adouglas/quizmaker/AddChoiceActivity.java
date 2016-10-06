@@ -19,15 +19,21 @@ public class AddChoiceActivity extends Activity {
         Intent intent = getIntent();
         String questionId = intent.getStringExtra("question_id");
         String choiceId = intent.getStringExtra("choice_id");
+        TextView textViewQuestionContent = (TextView) findViewById(R.id.question_content);
         if(choiceId != null && !choiceId.isEmpty())
         {
             choice = Choice.findById(Choice.class, Long.parseLong(choiceId));
+            Question q = Question.findById(Question.class, choice.question.getId());
+            textViewQuestionContent.setText(q.content);
             ((TextView) findViewById(R.id.choiceContent)).setText(choice.choiceContent);
             ((CheckBox) findViewById(R.id.correct)).setChecked(choice.correct);
+            this.setTitle("Edit Choice");
         }
         else
         {
             question = Question.findById(Question.class, Long.parseLong(questionId));
+            textViewQuestionContent.setText(question.content);
+            this.setTitle("Add Choice");
         }
     }
 

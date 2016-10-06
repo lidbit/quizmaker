@@ -18,25 +18,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/test_name"
-            android:text="Name"
+            android:text="@string/test_name"
+            android:textSize="20dp"
         />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/test_description"
-            android:text="description"
+            android:text="@string/test_description"
+            android:textSize="20dp"
         />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/test_timelimit"
-            android:text="time limit"
+            android:text="@string/time_limit"
+            android:textSize="20dp"
         />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/question_count"
-            android:text="0"
+            android:text="@string/test_question_count"
+            android:textSize="20dp"
         />
         <Button
             android:id="@+id/start_test"

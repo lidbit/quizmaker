@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">quizmaker</string>
     <string name="home">Home</string>
+    <string name="test_name">%1$s</string>
+    <string name="time_limit">The test time limit is %1$s seconds</string>
+    <string name="test_description">%1$s</string>
+    <string name="test_question_count">there are %1$d questions</string>
+    <string name="current_question">%1$s/%2$s</string>
+    <string name="current_question_content">%1$s</string>
 </resources>

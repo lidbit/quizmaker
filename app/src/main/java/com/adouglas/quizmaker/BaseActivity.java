@@ -10,7 +10,6 @@ public class BaseActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
     }
@@ -20,6 +19,12 @@ public class BaseActivity extends Activity {
         if(item.getItemId() == R.id.menuHome)
         {
             Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        else if(item.getItemId() == R.id.menuTests)
+        {
+            Intent intent = new Intent(this, TestsActivity.class);
             startActivity(intent);
             finish();
         }

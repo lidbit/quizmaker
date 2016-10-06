@@ -2,6 +2,7 @@ package com.adouglas.quizmaker;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -61,10 +62,12 @@ public class TestRunnerActivity extends Activity {
         currentQuestionNumber = (TextView) findViewById(R.id.current_question);
         lvChoices = (ListView) findViewById(R.id.lvChoices);
 
-        currentQuestionNumber.setText(String.valueOf(currentQuestionIndex+1));
+        Resources res = getResources();
+
+        currentQuestionNumber.setText(res.getString(R.string.current_question,String.valueOf(currentQuestionIndex+1),String.valueOf(questions.size())));
 
         //TODO: Fix index out of bounds exception, when there are no questions
-        currentQuestion.setText(questions.get(currentQuestionIndex).content);
+        currentQuestion.setText(res.getString(R.string.current_question_content, questions.get(currentQuestionIndex).content));
         currentChoices = Choice.find(Choice.class, "question = ?", questions.get(currentQuestionIndex).getId().toString());
 
         choicesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, currentChoices);
@@ -133,12 +136,13 @@ public class TestRunnerActivity extends Activity {
         {
             Button btnPrev = (Button) findViewById(R.id.btnPrev);
             btnPrev.setEnabled(true);
+            Resources res = getResources();
             currentQuestion.setText(questions.get(currentQuestionIndex).content);
-            currentQuestionNumber.setText(String.valueOf(currentQuestionIndex+1));
+            currentQuestion.setText(res.getString(R.string.current_question_content, questions.get(currentQuestionIndex).content));
+            currentQuestionNumber.setText(res.getString(R.string.current_question,String.valueOf(currentQuestionIndex+1),String.valueOf(questions.size())));
             choicesAdapter.clear();
             currentChoices = Choice.find(Choice.class, "question = ?", questions.get(currentQuestionIndex).getId().toString());
             choicesAdapter.addAll(currentChoices);
-            Log.d("", currentChoices.toString());
             choicesAdapter.notifyDataSetChanged();
         }
     }
@@ -153,9 +157,13 @@ public class TestRunnerActivity extends Activity {
             btnPrev.setEnabled(false);
             currentQuestionIndex = 0;
         }
-        currentQuestionNumber.setText(String.valueOf(currentQuestionIndex+1));
+        Resources res = getResources();
         currentQuestion.setText(questions.get(currentQuestionIndex).content);
+        currentQuestion.setText(res.getString(R.string.current_question_content, questions.get(currentQuestionIndex).content));
+        currentQuestionNumber.setText(res.getString(R.string.current_question,String.valueOf(currentQuestionIndex+1),String.valueOf(questions.size())));
+        choicesAdapter.clear();
         currentChoices = Choice.find(Choice.class, "question = ?", questions.get(currentQuestionIndex).getId().toString());
+        choicesAdapter.addAll(currentChoices);
         choicesAdapter.notifyDataSetChanged();
     }
 

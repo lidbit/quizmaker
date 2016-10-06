@@ -28,6 +28,7 @@
             android:layout_height="match_parent"
             android:text="Test Description"
             android:id="@+id/txtTestDescription"
+            android:inputType="textMultiLine"
         />
 
         <EditText

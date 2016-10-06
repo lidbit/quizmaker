@@ -84,6 +84,7 @@ public class ChoicesActivity extends Activity {
         Intent intent = new Intent(this, QuestionsActivity.class);
         intent.putExtra("test_id", question.test.getId().toString());
         startActivity(intent);
+        finish();
     }
 
     public void onAddChoice(View view)

@@ -3,5 +3,12 @@
         <item
             android:title="@string/home"
             android:id="@+id/menuHome"
+            android:showAsAction="ifRoom"
             />
+        <item android:title="Tests"
+            android:id="@+id/menuTests"
+            android:showAsAction="never"
+            >
+
+        </item>
     </menu>
