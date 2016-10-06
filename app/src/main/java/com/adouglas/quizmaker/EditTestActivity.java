@@ -40,8 +40,6 @@ public class EditTestActivity extends Activity {
         test.description = testDescription;
         test.timelimit = testTimeLimit;
 
-        //TODO: Create add/edit question ui
-
         test.save();
 
         clearFields();
@@ -49,6 +47,7 @@ public class EditTestActivity extends Activity {
         Intent intent = new Intent(this, QuestionsActivity.class);
         intent.putExtra("test_id", test.getId().toString());
         startActivity(intent);
+        finish();
     }
 
     private void clearFields()
@@ -62,5 +61,6 @@ public class EditTestActivity extends Activity {
     {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 }

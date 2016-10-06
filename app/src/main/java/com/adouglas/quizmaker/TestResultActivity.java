@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
 import java.util.List;
 
 public class TestResultActivity extends Activity {
@@ -31,6 +30,7 @@ public class TestResultActivity extends Activity {
     {
         Intent intent = new Intent(this, TestsActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void onTryAgain(View view)
@@ -39,5 +39,6 @@ public class TestResultActivity extends Activity {
         Test test = Test.findById(Test.class, testResult.testId);
         intent.putExtra("test_id", test.getId().toString());
         startActivity(intent);
+        finish();
     }
 }
