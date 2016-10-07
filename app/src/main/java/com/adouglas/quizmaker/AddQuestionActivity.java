@@ -54,7 +54,7 @@ public class AddQuestionActivity extends Activity {
 
     public void onCancel(View view)
     {
-        Intent intent = new Intent(this, QuestionsActivity.class);
+        Intent intent = new Intent(this, QuestionsExpandableActivity.class);
         if(question != null)
         {
             intent.putExtra("test_id", question.test.getId().toString());

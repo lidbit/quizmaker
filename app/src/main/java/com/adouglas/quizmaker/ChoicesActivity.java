@@ -43,7 +43,7 @@ public class ChoicesActivity extends Activity {
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo)
     {
         menu.add(Menu.NONE, 1, Menu.NONE, "Edit");
-        menu.add(Menu.NONE, 2, Menu.NONE, "Delete");
+        menu.add(Menu.NONE, 2, Menu.NONE, "delete");
     }
 
     @Override

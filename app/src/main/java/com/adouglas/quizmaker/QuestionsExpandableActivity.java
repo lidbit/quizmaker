@@ -3,41 +3,63 @@ package com.adouglas.quizmaker;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
-import android.widget.TextView;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
-public class QuestionsActivity extends Activity {
+public class QuestionsExpandableActivity extends Activity {
 
     Test test;
     List<Question> questions;
-    private ArrayAdapter<Question> questionsAdapter;
+    Map<Question, List<Choice>> questionListMap;
+    ExpandableListView expListView;
+    private ExpandableListAdapter expListAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_questions);
+        setContentView(R.layout.activity_questions_expandable);
 
         Intent intent = getIntent();
         String testId = intent.getStringExtra("test_id");
         test = Test.findById(Test.class, Long.parseLong(testId));
 
-        TextView testName = (TextView) findViewById(R.id.test_name);
-        testName.setText(test.name);
-        ListView lvQuestions = (ListView) findViewById(R.id.lvQuestions);
-        registerForContextMenu(lvQuestions);
+        questions = Question.find(Question.class, "test = ?", testId);
 
-        questions = Question.find(Question.class, "test = ?", test.getId().toString());
-        questionsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, questions);
-        questionsAdapter.notifyDataSetChanged();
-        lvQuestions.setAdapter(questionsAdapter);
+        questionListMap = new LinkedHashMap<>();
+
+        for (Question q: questions) {
+            questionListMap.put(q, q.getChoices());
+        }
+
+        expListView = (ExpandableListView) findViewById(R.id.question_list);
+        expListAdapter = new ExpandableListAdapter(
+                this, questions, questionListMap);
+
+        expListView.setAdapter(expListAdapter);
+
+        registerForContextMenu(expListView);
+
+        expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                final Choice choice = (Choice) expListAdapter.getChild(
+                        groupPosition, childPosition);
+                Log.d("", choice.choiceContent);
+                return true;
+            }
+        });
     }
 
     @Override
@@ -50,7 +72,8 @@ public class QuestionsActivity extends Activity {
     @Override
     public boolean onContextItemSelected(MenuItem menuItem)
     {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuItem.getMenuInfo();
+        ExpandableListView.ExpandableListContextMenuInfo info =
+                (ExpandableListView.ExpandableListContextMenuInfo) menuItem.getMenuInfo();
         switch (menuItem.getItemId())
         {
             case 1:
@@ -85,7 +108,7 @@ public class QuestionsActivity extends Activity {
         }
         questions.remove((int)id);
         question.delete();
-        questionsAdapter.notifyDataSetChanged();
+        expListAdapter.notifyDataSetChanged();
     }
 
     public void onTest(View view)

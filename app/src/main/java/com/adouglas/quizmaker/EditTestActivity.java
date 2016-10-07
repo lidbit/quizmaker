@@ -43,8 +43,8 @@ public class EditTestActivity extends Activity {
         test.save();
 
         clearFields();
-
-        Intent intent = new Intent(this, QuestionsActivity.class);
+        
+        Intent intent = new Intent(this, QuestionsExpandableActivity.class);
         intent.putExtra("test_id", test.getId().toString());
         startActivity(intent);
         finish();
