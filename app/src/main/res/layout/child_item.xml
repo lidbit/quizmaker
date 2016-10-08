@@ -16,8 +16,17 @@
         android:id="@+id/choiceCorrect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_toLeftOf="@+id/editChoice"
         android:src="@drawable/checkmark"
         android:contentDescription="@string/app_name"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editChoice"
+        android:src="@drawable/edit"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+    />
 
 </RelativeLayout>

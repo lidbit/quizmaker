@@ -73,7 +73,6 @@
             android:name=".QuestionsExpandableActivity"
             android:label="Questions"
             >
-
         </activity>
     </application>
 

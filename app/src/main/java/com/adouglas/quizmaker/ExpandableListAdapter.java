@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -68,7 +69,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+    public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         Question question = (Question)getGroup(groupPosition);
         if(convertView == null)
         {
@@ -76,6 +77,46 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             convertView = layoutInflater.inflate(R.layout.group_item, null);
         }
         TextView textView = (TextView) convertView.findViewById(R.id.questionContent);
+        ImageView imageViewAddChoice = (ImageView) convertView.findViewById(R.id.addChoice);
+        imageViewAddChoice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Edit Choice");
+                builder.setCancelable(true);
+                LayoutInflater inflater = context.getLayoutInflater();
+
+                final View view = inflater.inflate(R.layout.add_choice, null);
+                final Choice choice = new Choice();
+
+                builder.setView(view);
+
+                builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        final EditText textEdit = (EditText) view.findViewById(R.id.choiceContent);
+                        choice.choiceContent = textEdit.getText().toString();
+                        choice.correct = false;
+                        choice.question = questions.get(groupPosition);
+                        choice.save();
+
+                        questionListMap.get(questions.get(groupPosition)).add(choice);
+
+                        notifyDataSetChanged();
+                    }
+                });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
+
         textView.setTypeface(null, Typeface.BOLD);
         textView.setText(question.content);
         return convertView;
@@ -90,7 +131,49 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             convertView = layoutInflater.inflate(R.layout.child_item, null);
         }
 
+        convertView.setLongClickable(true);
+
         ImageView imageView = (ImageView) convertView.findViewById(R.id.choiceCorrect);
+        ImageView imageViewEdit = (ImageView) convertView.findViewById(R.id.editChoice);
+
+        imageViewEdit.setImageResource(R.drawable.edit);
+
+        imageViewEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Choice> choices =
+                        questionListMap.get(questions.get(groupPosition));
+                final Choice c = choices.get(childPosition);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Edit Choice");
+                builder.setCancelable(true);
+                LayoutInflater inflater = context.getLayoutInflater();
+
+                View view = inflater.inflate(R.layout.add_choice, null);
+                final EditText textEdit = (EditText) view.findViewById(R.id.choiceContent);
+                textEdit.setText(c.choiceContent);
+
+                builder.setView(view);
+
+                builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        c.choiceContent = textEdit.getText().toString();
+                        c.save();
+                        notifyDataSetChanged();
+                    }
+                });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,21 +1,19 @@
 package com.adouglas.quizmaker;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
-
+import android.widget.Toast;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class QuestionsExpandableActivity extends Activity {
 
@@ -50,13 +48,35 @@ public class QuestionsExpandableActivity extends Activity {
         expListView.setAdapter(expListAdapter);
 
         registerForContextMenu(expListView);
+        expListView.setLongClickable(true);
 
         expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 final Choice choice = (Choice) expListAdapter.getChild(
                         groupPosition, childPosition);
-                Log.d("", choice.choiceContent);
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(QuestionsExpandableActivity.this);
+                alertDialog.setTitle("Add Choice");
+                alertDialog.setMessage("Enter Question Content");
+
+                alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getApplicationContext(), choice.choiceContent, Toast.LENGTH_SHORT);
+                        dialog.cancel();
+                    }
+                });
+
+                alertDialog.setPositiveButton("Add Choice", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getApplicationContext(), choice.choiceContent, Toast.LENGTH_SHORT);
+                        dialog.cancel();
+                    }
+                });
+
+                alertDialog.show();
+
                 return true;
             }
         });
