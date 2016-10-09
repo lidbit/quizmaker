@@ -308,11 +308,4 @@ public class EditTestActivity extends BaseActivity {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-
-    public void onCancel(View view)
-    {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
 }
