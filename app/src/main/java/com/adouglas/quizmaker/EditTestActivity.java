@@ -5,7 +5,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.view.ContextMenu;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,7 +20,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EditTestActivity extends Activity {
+public class EditTestActivity extends BaseActivity {
 
     Test test;
     List<Question> questions;
@@ -162,6 +164,26 @@ public class EditTestActivity extends Activity {
     }
 
     @Override
+    protected void onPause()
+    {
+        super.onPause();
+        test.name = ((EditText) findViewById(R.id.txtTestName)).getText().toString();
+        test.description = ((EditText) findViewById(R.id.txtTestDescription)).getText().toString();
+        test.timelimit = ((EditText) findViewById(R.id.txtTestTimelimit)).getText().toString();
+        test.save();
+    }
+
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        test.name = ((EditText) findViewById(R.id.txtTestName)).getText().toString();
+        test.description = ((EditText) findViewById(R.id.txtTestDescription)).getText().toString();
+        test.timelimit = ((EditText) findViewById(R.id.txtTestTimelimit)).getText().toString();
+        test.save();
+    }
+
+    @Override
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo)
     {
         menu.add(Menu.NONE, 1, Menu.NONE, "Edit");
@@ -208,6 +230,43 @@ public class EditTestActivity extends Activity {
         questions.remove((int)id);
         question.delete();
         expListAdapter.notifyDataSetChanged();
+    }
+
+    public void addQuestion(View view)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(EditTestActivity.this);
+        builder.setTitle("Add Question");
+        builder.setCancelable(true);
+        LayoutInflater inflater = getLayoutInflater();
+
+        final View addQuestionView = inflater.inflate(R.layout.add_choice, null);
+        final Question q = new Question();
+        q.test = test;
+
+        builder.setView(addQuestionView);
+
+        builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                final EditText textEdit = (EditText) addQuestionView.findViewById(R.id.choiceContent);
+                q.content = textEdit.getText().toString();
+                q.save();
+
+                questions.add(q);
+
+                questionListMap.put(q, q.getChoices());
+                expListAdapter.notifyDataSetChanged();
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     public void onSave(View view)
