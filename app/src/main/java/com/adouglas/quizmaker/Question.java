@@ -16,16 +16,6 @@ public class Question extends SugarRecord {
         this.content = content;
     }
 
-    public void setContent(String content)
-    {
-        this.content = content;
-    }
-
-    public String getContent()
-    {
-        return content;
-    }
-
     @Override
     public String toString()
     {

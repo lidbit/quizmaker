@@ -26,9 +26,9 @@ public class TestRunnerActivity extends Activity {
     List<Question> questions;
     List<Choice> currentChoices;
     List<QuestionResult> questionResults;
+    Choice currentChoice;
     private ArrayAdapter<Choice> choicesAdapter;
     private int currentQuestionIndex = 0;
-    Choice currentChoice;
     private int correctAnswers = 0;
     private ListView lvChoices;
     private AdapterView.OnItemClickListener clickListener;
@@ -64,58 +64,55 @@ public class TestRunnerActivity extends Activity {
 
         Resources res = getResources();
 
-        currentQuestionNumber.setText(res.getString(R.string.current_question,String.valueOf(currentQuestionIndex+1),String.valueOf(questions.size())));
+        currentQuestionNumber.setText(res.getString(R.string.current_question, String.valueOf(currentQuestionIndex + 1), String.valueOf(questions.size())));
 
         //TODO: Fix index out of bounds exception, when there are no questions
         currentQuestion.setText(res.getString(R.string.current_question_content, questions.get(currentQuestionIndex).content));
-        currentChoices = Choice.find(Choice.class, "question = ?", questions.get(currentQuestionIndex).getId().toString());
+        currentChoices = Choice.find(Choice.class, "question = ?",
+                questions.get(currentQuestionIndex).getId().toString());
 
-        choicesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, currentChoices);
+        choicesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
+                currentChoices);
         lvChoices.setAdapter(choicesAdapter);
         lvChoices.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
-        // TODO: Issue here with not able to select a choice once it has been selected previously
-        // Currently only able to select an answer once the first time.
         clickListener = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 currentChoice = (Choice) lvChoices.getItemAtPosition(position);
                 boolean questionAnswered = false;
                 QuestionResult questionResult;
-                if(currentChoice.correct)
-                {
+                if (currentChoice.correct) {
                     correctAnswers++;
                     testResult.correctAnswers = correctAnswers;
                 }
 
-                for(int i = 0; i < questionResults.size(); i++)
-                {
-                    if(Objects.equals(questionResults.get(i).questionContent, questions.get(currentQuestionIndex).content))
-                    {
+                for (int i = 0; i < questionResults.size(); i++) {
+                    if (Objects.equals(questionResults.get(i).questionContent,
+                            questions.get(currentQuestionIndex).content)) {
                         questionAnswered = true;
                         break;
                     }
                 }
 
-                if(!questionAnswered)
-                {
+                if (!questionAnswered) {
                     questionResult = new QuestionResult();
                     questionResult.questionContent = questions.get(currentQuestionIndex).content;
                     questionResult.correct = currentChoice.correct;
                     questionResult.userChoice = currentChoice.choiceContent;
-                    questionResult.correctChoice = questions.get(currentQuestionIndex).getCorrectChoice().choiceContent;
+                    questionResult.correctChoice = questions.get(
+                            currentQuestionIndex).getCorrectChoice().choiceContent;
                     questionResult.testResult = TestResult.findById(TestResult.class, testResultId);
                     questionResult.save();
 
                     questionResults.add(questionResult);
-                }
-                else
-                {
+                } else {
                     questionResult = questionResults.get(currentQuestionIndex);
                     questionResult.questionContent = questions.get(currentQuestionIndex).content;
                     questionResult.correct = currentChoice.correct;
                     questionResult.userChoice = currentChoice.choiceContent;
-                    questionResult.correctChoice = questions.get(currentQuestionIndex).getCorrectChoice().choiceContent;
+                    questionResult.correctChoice = questions.get(
+                            currentQuestionIndex).getCorrectChoice().choiceContent;
                     questionResult.save();
                 }
             }
@@ -126,22 +123,21 @@ public class TestRunnerActivity extends Activity {
 
     private void getNextQuestion() {
         currentQuestionIndex++;
-        if(currentQuestionIndex > questions.size() - 1)
-        {
+        if (currentQuestionIndex > questions.size() - 1) {
             Button btnNext = (Button) findViewById(R.id.btnNext);
             btnNext.setEnabled(false);
             currentQuestionIndex = questions.size() - 1;
-        }
-        else
-        {
+        } else {
             Button btnPrev = (Button) findViewById(R.id.btnPrev);
             btnPrev.setEnabled(true);
             Resources res = getResources();
             currentQuestion.setText(questions.get(currentQuestionIndex).content);
             currentQuestion.setText(res.getString(R.string.current_question_content, questions.get(currentQuestionIndex).content));
-            currentQuestionNumber.setText(res.getString(R.string.current_question,String.valueOf(currentQuestionIndex+1),String.valueOf(questions.size())));
+            currentQuestionNumber.setText(res.getString(R.string.current_question,
+                    String.valueOf(currentQuestionIndex + 1), String.valueOf(questions.size())));
             choicesAdapter.clear();
-            currentChoices = Choice.find(Choice.class, "question = ?", questions.get(currentQuestionIndex).getId().toString());
+            currentChoices = Choice.find(Choice.class, "question = ?",
+                    questions.get(currentQuestionIndex).getId().toString());
             choicesAdapter.addAll(currentChoices);
             choicesAdapter.notifyDataSetChanged();
         }
@@ -151,8 +147,7 @@ public class TestRunnerActivity extends Activity {
         Button btnNext = (Button) findViewById(R.id.btnNext);
         btnNext.setEnabled(true);
         currentQuestionIndex--;
-        if(currentQuestionIndex < 0)
-        {
+        if (currentQuestionIndex < 0) {
             Button btnPrev = (Button) findViewById(R.id.btnPrev);
             btnPrev.setEnabled(false);
             currentQuestionIndex = 0;
@@ -160,18 +155,17 @@ public class TestRunnerActivity extends Activity {
         Resources res = getResources();
         currentQuestion.setText(questions.get(currentQuestionIndex).content);
         currentQuestion.setText(res.getString(R.string.current_question_content, questions.get(currentQuestionIndex).content));
-        currentQuestionNumber.setText(res.getString(R.string.current_question,String.valueOf(currentQuestionIndex+1),String.valueOf(questions.size())));
+        currentQuestionNumber.setText(res.getString(R.string.current_question, String.valueOf(currentQuestionIndex + 1), String.valueOf(questions.size())));
         choicesAdapter.clear();
-        currentChoices = Choice.find(Choice.class, "question = ?", questions.get(currentQuestionIndex).getId().toString());
+        currentChoices = Choice.find(Choice.class, "question = ?",
+                questions.get(currentQuestionIndex).getId().toString());
         choicesAdapter.addAll(currentChoices);
         choicesAdapter.notifyDataSetChanged();
     }
 
     @Override
-    protected void onStart()
-    {
+    protected void onStart() {
         super.onStart();
-        Log.d("test runner", "started");
         final Intent testResultIntent = new Intent(this, TestResultActivity.class);
 
         // For some reason I have to make a copy of
@@ -195,13 +189,11 @@ public class TestRunnerActivity extends Activity {
         }.start();
     }
 
-    public void onNext(View view)
-    {
+    public void onNext(View view) {
         getNextQuestion();
     }
 
-    public void onPrev(View view)
-    {
+    public void onPrev(View view) {
         getPrevQuestion();
     }
 }
