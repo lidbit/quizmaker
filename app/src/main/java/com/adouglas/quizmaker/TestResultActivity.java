@@ -1,6 +1,5 @@
 package com.adouglas.quizmaker;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -23,7 +22,7 @@ public class TestResultActivity extends BaseActivity {
         questionResults = QuestionResult.find(QuestionResult.class, "test_result = ?", testResult.getId().toString());
         questionResultArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, questionResults);
         ListView lvQuestionResults = (ListView) findViewById(R.id.lvQuestionResults);
-        lvQuestionResults.setAdapter(questionResultArrayAdapter);
+        lvQuestionResults.setAdapter(new QuestionResultsAdapter(this, questionResults));
     }
 
     public void onBackToTests(View view)
