@@ -210,10 +210,38 @@ public class EditTestActivity extends BaseActivity {
 
     public void editQuestion(long id)
     {
-        Question question = questions.get((int)id);
-        Intent intent = new Intent(this, AddQuestionActivity.class);
-        intent.putExtra("question_id", question.getId().toString());
-        startActivity(intent);
+        AlertDialog.Builder builder = new AlertDialog.Builder(EditTestActivity.this);
+        builder.setTitle("Edit Question");
+        builder.setCancelable(true);
+        LayoutInflater inflater = getLayoutInflater();
+
+        final View editQuestionView = inflater.inflate(R.layout.add_choice, null);
+        final Question q = questions.get((int)id);
+
+        EditText editText = (EditText) editQuestionView.findViewById(R.id.choiceContent);
+        editText.setText(q.content);
+
+        builder.setView(editQuestionView);
+
+        builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                final EditText textEdit = (EditText) editQuestionView.findViewById(R.id.choiceContent);
+                q.content = textEdit.getText().toString();
+                q.save();
+
+                expListAdapter.notifyDataSetChanged();
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     public void deleteQuestion(long id)
