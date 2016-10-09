@@ -7,4 +7,5 @@
     <string name="test_question_count">there are %1$d questions</string>
     <string name="current_question">%1$s/%2$s</string>
     <string name="current_question_content">%1$s</string>
+    <string name="questions">%1$d Questions</string>
 </resources>

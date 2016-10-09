@@ -3,6 +3,8 @@ package com.adouglas.quizmaker;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -35,11 +38,14 @@ public class EditTestActivity extends BaseActivity {
         if(testId != null && !testId.isEmpty())
         {
             test = Test.findById(Test.class, Integer.valueOf(testId));
+            questions = Question.find(Question.class, "test = ?", testId);
+
             ((EditText) findViewById(R.id.txtTestName)).setText(test.name);
             ((EditText) findViewById(R.id.txtTestDescription)).setText(test.description);
             ((EditText) findViewById(R.id.txtTestTimelimit)).setText(test.timelimit);
-
-            questions = Question.find(Question.class, "test = ?", testId);
+            Resources res = getResources();
+            ((TextView) findViewById(R.id.questions)).setText(
+                    res.getString(R.string.questions, questions.size()));
         }
         else
         {
@@ -66,6 +72,15 @@ public class EditTestActivity extends BaseActivity {
         expListView = (ExpandableListView) findViewById(R.id.question_list);
         expListAdapter = new ExpandableListAdapter(
                 this, questions, questionListMap);
+        expListAdapter.registerDataSetObserver(new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                Resources res = getResources();
+                ((TextView) findViewById(R.id.questions)).setText(
+                        res.getString(R.string.questions, questions.size()));
+            }
+        });
 
         expListView.setAdapter(expListAdapter);
 

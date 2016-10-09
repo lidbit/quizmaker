@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_edit_test"
@@ -31,7 +26,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Test Description"
+            android:hint="test description"
             android:id="@+id/txtTestDescription"
             android:inputType="textMultiLine"
         />
@@ -40,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberSigned"
-            android:text="60"
+            android:hint="test timelimit (seconds)"
             android:id="@+id/txtTestTimelimit"
         />
 
@@ -53,7 +48,7 @@
                 android:id="@+id/questions"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Questions"
+                android:text="@string/questions"
                 android:padding="10dp"
                 />
             <Button
@@ -68,10 +63,9 @@
         <ExpandableListView
             android:id="@+id/question_list"
             android:layout_width="fill_parent"
-            android:layout_height="400dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/questions"
             >
         </ExpandableListView>
     </LinearLayout>
 </RelativeLayout>
-</ScrollView>
