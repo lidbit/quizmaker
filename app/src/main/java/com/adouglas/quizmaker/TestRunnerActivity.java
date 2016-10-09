@@ -91,6 +91,7 @@ public class TestRunnerActivity extends Activity {
                 if (currentChoice.correct) {
                     correctAnswers++;
                     testResult.correctAnswers = correctAnswers;
+                    testResult.save();
                 }
 
                 for (int i = 0; i < questionResults.size(); i++) {
