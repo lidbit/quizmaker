@@ -82,7 +82,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Edit Choice");
+                builder.setTitle("Add Choice");
                 builder.setCancelable(true);
                 LayoutInflater inflater = context.getLayoutInflater();
 
