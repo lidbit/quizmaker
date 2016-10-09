@@ -1,11 +1,9 @@
 package com.adouglas.quizmaker;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TextInputEditText;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,7 +12,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -295,33 +292,6 @@ public class EditTestActivity extends BaseActivity {
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
-    }
-
-    public void onSave(View view)
-    {
-        String testName = ((EditText) findViewById(R.id.txtTestName)).getText().toString();
-        String testDescription = ((EditText) findViewById(R.id.txtTestDescription)).getText().toString();
-        String testTimeLimit = ((EditText) findViewById(R.id.txtTestTimelimit)).getText().toString();
-
-        test.name = testName;
-        test.description = testDescription;
-        test.timelimit = testTimeLimit;
-
-        test.save();
-
-        clearFields();
-        
-        Intent intent = new Intent(this, QuestionsExpandableActivity.class);
-        intent.putExtra("test_id", test.getId().toString());
-        startActivity(intent);
-        finish();
-    }
-
-    private void clearFields()
-    {
-        ((EditText) findViewById(R.id.txtTestName)).setText("");
-        ((EditText) findViewById(R.id.txtTestDescription)).setText("");
-        ((EditText) findViewById(R.id.txtTestTimelimit)).setText("");
     }
 
     public void onCancel(View view)

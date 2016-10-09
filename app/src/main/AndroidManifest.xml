@@ -54,26 +54,9 @@
             android:name=".EditTestActivity"
             android:label="Edit Test" />
         <activity
-            android:name=".QuestionsActivity"
-            android:label="Questions" />
-        <activity
-            android:name=".AddQuestionActivity"
-            android:label="Add Question" />
-        <activity
-            android:name=".ChoicesActivity"
-            android:label="Multiple Choices" />
-        <activity
-            android:name=".AddChoiceActivity"
-            android:label="Add Answer" />
-        <activity
             android:name=".TestResultsActivity"
             android:label="Test Results" />
         <activity android:name=".BaseActivity" />
-        <activity
-            android:name=".QuestionsExpandableActivity"
-            android:label="Questions"
-            >
-        </activity>
     </application>
 
 </manifest>
