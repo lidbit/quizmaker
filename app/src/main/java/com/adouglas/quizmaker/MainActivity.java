@@ -10,10 +10,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.adouglas.quizmaker.model.Choice;
+import com.adouglas.quizmaker.model.Question;
+import com.adouglas.quizmaker.model.QuestionResult;
+import com.adouglas.quizmaker.model.Test;
+import com.adouglas.quizmaker.model.TestResult;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.orm.SugarDb;
+
+import java.io.File;
 
 public class MainActivity extends BaseActivity {
 
@@ -30,6 +38,33 @@ public class MainActivity extends BaseActivity {
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
+//        SugarDb sugarDb = new SugarDb(getApplicationContext());
+//        new File(sugarDb.getDB().getPath()).delete();
+//        Test.findById(Test.class, (long) 1);
+//        Question.findById(Question.class, (long) 1);
+//        Choice.findById(Choice.class, (long) 1);
+//        QuestionResult.findById(QuestionResult.class, (long) 1);
+//        TestResult.findById(TestResult.class, (long) 1);
+
+//        Test t = new Test();
+//        t.name = "test";
+//        t.save();
+//        Question q = new Question();
+//        q.content = "1 + 1";
+//        q.test = t;
+//        q.save();
+//        Choice c = new Choice();
+//        c.choiceContent = "2";
+//        c.question = q;
+//        c.save();
+//        TestResult tr = new TestResult();
+//        tr.testName = "test";
+//        tr.save();
+//        QuestionResult qr = new QuestionResult();
+//        qr.userChoice = "2";
+//        qr.testResult = tr;
+//        qr.save();
     }
 
     public void OnTakeTest(View view) {

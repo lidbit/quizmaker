@@ -42,7 +42,7 @@ Thumbs.dbb
 *.jpg
 *.jpeg
 *.bmp
-*.png
+#*.png
 *.gif
 *.tif
 *.ogg
