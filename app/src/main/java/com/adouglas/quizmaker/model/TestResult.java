@@ -1,4 +1,4 @@
-package com.adouglas.quizmaker;
+package com.adouglas.quizmaker.model;
 
 import com.orm.SugarRecord;
 import java.util.Date;
@@ -8,12 +8,12 @@ import java.util.Date;
  */
 
 public class TestResult extends SugarRecord {
-    String testName;
-    String testDescription;
-    Date dateTaken;
-    int correctAnswers;
-    int totalQuestions;
-    int testId;
+    public String testName;
+    public String testDescription;
+    public Date dateTaken;
+    public int correctAnswers;
+    public int totalQuestions;
+    public int testId;
 
     public TestResult()
     {

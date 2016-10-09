@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.adouglas.quizmaker.model.QuestionResult;
+
 import java.util.List;
 
 /**

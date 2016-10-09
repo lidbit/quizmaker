@@ -15,6 +15,9 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.adouglas.quizmaker.model.*;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;

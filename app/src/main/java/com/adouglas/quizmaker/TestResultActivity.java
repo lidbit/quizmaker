@@ -5,6 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.adouglas.quizmaker.model.QuestionResult;
+import com.adouglas.quizmaker.model.Test;
+import com.adouglas.quizmaker.model.TestResult;
+
 import java.util.List;
 
 public class TestResultActivity extends BaseActivity {

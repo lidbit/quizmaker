@@ -1,7 +1,6 @@
 package com.adouglas.quizmaker;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -13,6 +12,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.adouglas.quizmaker.model.Choice;
+import com.adouglas.quizmaker.model.Question;
+import com.adouglas.quizmaker.model.Test;
 
 import java.util.List;
 

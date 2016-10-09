@@ -1,4 +1,4 @@
-package com.adouglas.quizmaker;
+package com.adouglas.quizmaker.model;
 import com.orm.SugarRecord;
 import java.util.List;
 
@@ -7,7 +7,7 @@ import java.util.List;
  */
 
 public class Question extends SugarRecord {
-    String content;
+    public String content;
 
     public Question() {}
 

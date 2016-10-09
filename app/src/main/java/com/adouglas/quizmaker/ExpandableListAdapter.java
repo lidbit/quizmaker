@@ -13,6 +13,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.adouglas.quizmaker.model.Choice;
+import com.adouglas.quizmaker.model.Question;
+
 import java.util.List;
 import java.util.Map;
 

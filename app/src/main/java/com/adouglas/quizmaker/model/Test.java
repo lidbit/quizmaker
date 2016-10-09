@@ -1,4 +1,5 @@
-package com.adouglas.quizmaker;
+package com.adouglas.quizmaker.model;
+import com.adouglas.quizmaker.model.Question;
 import com.orm.SugarRecord;
 import java.util.List;
 
@@ -7,12 +8,12 @@ import java.util.List;
  */
 
 public class Test extends SugarRecord {
-    String name;
-    String description;
-    String timelimit;
-    String testType;
-    Boolean running;
-    int userId;
+    public String name;
+    public String description;
+    public String timelimit;
+    public String testType;
+    public Boolean running;
+    public int userId;
 
     public Test()
     {

@@ -1,4 +1,4 @@
-package com.adouglas.quizmaker;
+package com.adouglas.quizmaker.model;
 
 import com.orm.SugarRecord;
 
@@ -7,14 +7,14 @@ import com.orm.SugarRecord;
  */
 
 public class QuestionResult extends SugarRecord {
-    String questionContent;
-    boolean correct;
-    String userChoice;
-    String correctChoice;
+    public String questionContent;
+    public boolean correct;
+    public String userChoice;
+    public String correctChoice;
 
     public QuestionResult() {}
 
-    TestResult testResult;
+    public TestResult testResult;
 
     @Override
     public String toString()
