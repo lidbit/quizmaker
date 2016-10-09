@@ -2,6 +2,7 @@ package com.adouglas.quizmaker;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,8 +65,12 @@ public class QuestionResultsAdapter extends BaseAdapter {
         viewModel.isCorrect = (ImageView) rowView.findViewById(R.id.is_correct);
         viewModel.correctAnswer = (TextView) rowView.findViewById(R.id.correctAnswer);
 
+        Resources res = context.getResources();
+
+
         viewModel.questionContent.setText(questionResults.get(position).questionContent);
-        viewModel.userChoice.setText(questionResults.get(position).userChoice);
+        viewModel.userChoice.setText(res.getString(R.string.user_choice,
+                questionResults.get(position).userChoice));
         if(questionResults.get(position).correct)
         {
             viewModel.isCorrect.setImageResource(R.drawable.checkmark);
@@ -73,7 +78,8 @@ public class QuestionResultsAdapter extends BaseAdapter {
         else {
             viewModel.isCorrect.setImageResource(R.drawable.delete);
         }
-        viewModel.correctAnswer.setText(questionResults.get(position).correctChoice);
+        viewModel.correctAnswer.setText(res.getString(R.string.correct_choice,
+                questionResults.get(position).correctChoice));
 
         return rowView;
     }

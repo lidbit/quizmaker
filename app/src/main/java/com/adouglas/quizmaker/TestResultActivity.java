@@ -7,13 +7,10 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.adouglas.quizmaker.model.QuestionResult;
 import com.adouglas.quizmaker.model.Test;
 import com.adouglas.quizmaker.model.TestResult;
-
 import java.util.List;
-import java.util.Locale;
 
 public class TestResultActivity extends BaseActivity {
     private TestResult testResult;

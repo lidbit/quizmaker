@@ -9,4 +9,6 @@
     <string name="current_question_content">%1$s</string>
     <string name="questions">%1$d Questions</string>
     <string name="test_score">Test Score %1$.1f %2$s</string>
+    <string name="user_choice">User choice was %1$s</string>
+    <string name="correct_choice">Correct choice is %1$s</string>
 </resources>
