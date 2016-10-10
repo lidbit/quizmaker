@@ -22,7 +22,8 @@ public class TestResultsActivity extends BaseActivity {
 
         final ListView listView = (ListView) findViewById(R.id.lvTestResults);
         testResults = TestResult.listAll(TestResult.class);
-        testResultArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, testResults);
+        testResultArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
+                testResults);
         listView.setAdapter(testResultArrayAdapter);
         listView.setClickable(true);
         final Intent intent = new Intent(this, TestResultActivity.class);
