@@ -14,7 +14,6 @@ import java.util.List;
 
 public class TestResultActivity extends BaseActivity {
     private TestResult testResult;
-    ArrayAdapter<QuestionResult> questionResultArrayAdapter;
     List<QuestionResult> questionResults;
 
     @Override
@@ -33,7 +32,6 @@ public class TestResultActivity extends BaseActivity {
 
         testScore.setText(percentString);
         questionResults = QuestionResult.find(QuestionResult.class, "test_result = ?", testResult.getId().toString());
-        questionResultArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, questionResults);
         ListView lvQuestionResults = (ListView) findViewById(R.id.lvQuestionResults);
         lvQuestionResults.setAdapter(new QuestionResultsAdapter(this, questionResults));
     }

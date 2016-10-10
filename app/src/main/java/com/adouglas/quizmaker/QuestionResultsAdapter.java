@@ -67,7 +67,6 @@ public class QuestionResultsAdapter extends BaseAdapter {
 
         Resources res = context.getResources();
 
-
         viewModel.questionContent.setText(questionResults.get(position).questionContent);
         viewModel.userChoice.setText(res.getString(R.string.user_choice,
                 questionResults.get(position).userChoice));
