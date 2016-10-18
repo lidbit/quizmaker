@@ -42,11 +42,11 @@ public class MainActivity extends BaseActivity {
         //
         // Instant Run must be disabled for Sugar Orm to work!!!
         // TODO: Disable Instant run
-        // In Android Studio got to
+        // In Android Studio go to
         // File -> Settings -> Build, Execution, Deployment -> Instant Run
         // Uncheck Enable Instant Run... option
 
-        // During First run this is needed for force table creation
+        // During First run this is needed to force table creation
 
         try
         {
