@@ -1,15 +1,11 @@
 package com.adouglas.quizmaker;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
 import com.adouglas.quizmaker.model.Choice;
 import com.adouglas.quizmaker.model.Question;
 import com.adouglas.quizmaker.model.QuestionResult;
@@ -58,29 +54,12 @@ public class MainActivity extends BaseActivity {
         }
         catch (Exception e)
         {
+            Log.e("Quizmaker", "Please disable instant run in Android Studio");
+            Log.i("Quizmaker", "File -> Settings -> Build, Execution, Deployment -> Instant Run");
             Toast.makeText(getApplicationContext(), "Please disable instant run in Android Studio", Toast.LENGTH_LONG).show();
             SugarDb sugarDb = new SugarDb(getApplicationContext());
             new File(sugarDb.getDB().getPath()).delete();
             finish();
-
-//            Test t = new Test();
-//            t.name = "test";
-//            t.save();
-//            Question q = new Question();
-//            q.content = "1 + 1";
-//            q.test = t;
-//            q.save();
-//            Choice c = new Choice();
-//            c.choiceContent = "2";
-//            c.question = q;
-//            c.save();
-//            TestResult tr = new TestResult();
-//            tr.testName = "test";
-//            tr.save();
-//            QuestionResult qr = new QuestionResult();
-//            qr.userChoice = "2";
-//            qr.testResult = tr;
-//            qr.save();
         }
     }
 
