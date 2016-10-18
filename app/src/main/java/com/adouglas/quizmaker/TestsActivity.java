@@ -113,6 +113,6 @@ public class TestsActivity extends BaseActivity {
         // remove from db
         test.delete();
 
-        Toast.makeText(getApplicationContext(), "Deleted test " + String.valueOf(id), Toast.LENGTH_SHORT);
+        Toast.makeText(getApplicationContext(), "Deleted test " + String.valueOf(id), Toast.LENGTH_SHORT).show();
     }
 }

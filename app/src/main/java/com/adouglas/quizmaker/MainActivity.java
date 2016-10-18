@@ -39,32 +39,49 @@ public class MainActivity extends BaseActivity {
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
-//        SugarDb sugarDb = new SugarDb(getApplicationContext());
-//        new File(sugarDb.getDB().getPath()).delete();
-//        Test.findById(Test.class, (long) 1);
-//        Question.findById(Question.class, (long) 1);
-//        Choice.findById(Choice.class, (long) 1);
-//        QuestionResult.findById(QuestionResult.class, (long) 1);
-//        TestResult.findById(TestResult.class, (long) 1);
+        //
+        // Instant Run must be disabled for Sugar Orm to work!!!
+        // TODO: Disable Instant run
+        // In Android Studio got to
+        // File -> Settings -> Build, Execution, Deployment -> Instant Run
+        // Uncheck Enable Instant Run... option
 
-//        Test t = new Test();
-//        t.name = "test";
-//        t.save();
-//        Question q = new Question();
-//        q.content = "1 + 1";
-//        q.test = t;
-//        q.save();
-//        Choice c = new Choice();
-//        c.choiceContent = "2";
-//        c.question = q;
-//        c.save();
-//        TestResult tr = new TestResult();
-//        tr.testName = "test";
-//        tr.save();
-//        QuestionResult qr = new QuestionResult();
-//        qr.userChoice = "2";
-//        qr.testResult = tr;
-//        qr.save();
+        // During First run this is needed for force table creation
+
+        try
+        {
+            Test.findById(Test.class, (long) 1);
+            Question.findById(Question.class, (long) 1);
+            Choice.findById(Choice.class, (long) 1);
+            QuestionResult.findById(QuestionResult.class, (long) 1);
+            TestResult.findById(TestResult.class, (long) 1);
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(getApplicationContext(), "Please disable instant run in Android Studio", Toast.LENGTH_LONG).show();
+            SugarDb sugarDb = new SugarDb(getApplicationContext());
+            new File(sugarDb.getDB().getPath()).delete();
+            finish();
+
+//            Test t = new Test();
+//            t.name = "test";
+//            t.save();
+//            Question q = new Question();
+//            q.content = "1 + 1";
+//            q.test = t;
+//            q.save();
+//            Choice c = new Choice();
+//            c.choiceContent = "2";
+//            c.question = q;
+//            c.save();
+//            TestResult tr = new TestResult();
+//            tr.testName = "test";
+//            tr.save();
+//            QuestionResult qr = new QuestionResult();
+//            qr.userChoice = "2";
+//            qr.testResult = tr;
+//            qr.save();
+        }
     }
 
     public void OnTakeTest(View view) {

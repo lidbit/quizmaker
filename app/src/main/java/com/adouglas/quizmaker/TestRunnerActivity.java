@@ -72,7 +72,6 @@ public class TestRunnerActivity extends Activity {
 
         currentQuestionNumber.setText(res.getString(R.string.current_question, String.valueOf(currentQuestionIndex + 1), String.valueOf(questions.size())));
 
-        //TODO: Fix index out of bounds exception, when there are no questions
         currentQuestion.setText(res.getString(R.string.current_question_content, questions.get(currentQuestionIndex).content));
         currentChoices = Choice.find(Choice.class, "question = ?",
                 questions.get(currentQuestionIndex).getId().toString());
