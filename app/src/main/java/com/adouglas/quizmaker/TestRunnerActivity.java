@@ -101,13 +101,15 @@ public class TestRunnerActivity extends Activity {
                     }
                 }
 
+                Choice correctChoice = questions.get(currentQuestionIndex).getCorrectChoice();
+
                 if (!questionAnswered) {
                     questionResult = new QuestionResult();
                     questionResult.questionContent = questions.get(currentQuestionIndex).content;
                     questionResult.correct = currentChoice.correct;
                     questionResult.userChoice = currentChoice.choiceContent;
-                    questionResult.correctChoice = questions.get(
-                            currentQuestionIndex).getCorrectChoice().choiceContent;
+
+                    questionResult.correctChoice = correctChoice != null ? correctChoice.choiceContent : "";
                     questionResult.testResult = TestResult.findById(TestResult.class, testResultId);
                     questionResult.save();
 
@@ -117,8 +119,7 @@ public class TestRunnerActivity extends Activity {
                     questionResult.questionContent = questions.get(currentQuestionIndex).content;
                     questionResult.correct = currentChoice.correct;
                     questionResult.userChoice = currentChoice.choiceContent;
-                    questionResult.correctChoice = questions.get(
-                            currentQuestionIndex).getCorrectChoice().choiceContent;
+                    questionResult.correctChoice = correctChoice != null ? correctChoice.choiceContent : "";
                     questionResult.save();
                 }
             }
