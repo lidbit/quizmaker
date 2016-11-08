@@ -3,7 +3,6 @@ package com.adouglas.quizmaker;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,16 +12,15 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.adouglas.quizmaker.model.Choice;
 import com.adouglas.quizmaker.model.Question;
 import com.adouglas.quizmaker.model.Test;
-
 import org.json.*;
+import com.google.gson.Gson;
 import com.loopj.android.http.*;
-
+import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.List;
-
 import cz.msebera.android.httpclient.Header;
 
 public class TestsActivity extends BaseActivity {
@@ -40,13 +38,26 @@ public class TestsActivity extends BaseActivity {
         actionBar.setSubtitle("Long press to edit test");
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        tests = Test.listAll(Test.class);
+        if(QuizmakerRestClient.isTokenValid())
+        {
+            try {
+                getTests();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            tests = Test.listAll(Test.class);
+            testsAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, tests);
+            testsAdapter.notifyDataSetChanged();
+            initialiseListView(testsAdapter);
+        }
+    }
+
+    private void initialiseListView(ArrayAdapter<Test> testsAdapter) {
         final ListView listView = (ListView) findViewById(R.id.lvTests);
 
         registerForContextMenu(listView);
-
-        testsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tests);
-        testsAdapter.notifyDataSetChanged();
         listView.setAdapter(testsAdapter);
         listView.setClickable(true);
         listView.setOnItemClickListener(new OnItemClickListener() {
@@ -62,21 +73,27 @@ public class TestsActivity extends BaseActivity {
 
     public void getTests() throws JSONException
     {
-        QuizmakerRestClient.get("tests", null, new JsonHttpResponseHandler(){
+        QuizmakerRestClient.get("tests", null, new AsyncHttpResponseHandler() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                try {
+                    String response = responseBody == null ? null : new String(
+                            responseBody, getCharset());
+                    Gson gson = new Gson();
+                    Test[] arr = gson.fromJson(response, Test[].class);
+                    tests = Arrays.asList(arr);
+                    testsAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, tests);
+                    testsAdapter.notifyDataSetChanged();
+                    initialiseListView(testsAdapter);
+
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                super.onSuccess(statusCode, headers, response);
-                Log.d("Quizmaker; getTests ", response.toString());
-            }
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
             }
         });
     }
