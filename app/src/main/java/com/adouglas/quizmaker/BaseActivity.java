@@ -8,6 +8,7 @@ import android.view.MenuItem;;
 
 public class BaseActivity extends Activity {
 
+    protected static String userId;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);

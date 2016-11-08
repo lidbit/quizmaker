@@ -3,6 +3,7 @@ package com.adouglas.quizmaker;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +18,12 @@ import com.adouglas.quizmaker.model.Choice;
 import com.adouglas.quizmaker.model.Question;
 import com.adouglas.quizmaker.model.Test;
 
+import org.json.*;
+import com.loopj.android.http.*;
+
 import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
 
 public class TestsActivity extends BaseActivity {
 
@@ -50,6 +56,27 @@ public class TestsActivity extends BaseActivity {
                 Test test = (Test) listView.getItemAtPosition(position);
                 intent.putExtra("test_id", test.getId().toString());
                 startActivity(intent);
+            }
+        });
+    }
+
+    public void getTests() throws JSONException
+    {
+        QuizmakerRestClient.get("tests", null, new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                super.onSuccess(statusCode, headers, response);
+                Log.d("Quizmaker; getTests ", response.toString());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
             }
         });
     }
